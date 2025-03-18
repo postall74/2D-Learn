@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider), typeof(MeshRenderer))]
 public class MovementSphere : MonoBehaviour
 {
     [SerializeField] private Transform _transform;

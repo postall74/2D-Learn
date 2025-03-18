@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider), typeof(MeshRenderer))]
 public class SpinCube : MonoBehaviour
 {
     [SerializeField] private Transform _transform;

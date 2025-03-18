@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider), typeof(MeshRenderer))]
 public class GrowthCapsule : MonoBehaviour
 {
     [SerializeField] private Transform _transform;
