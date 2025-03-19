@@ -421,11 +421,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1251671189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f106e5e1f31e9c247bf4ec7b2cb6a111, type: 3}
+  m_Script: {fileID: 11500000, guid: 822a2fad911690a498cc2483d5e7cdda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
-  _speed: 1
+  _speed: 0.5
 --- !u!1 &1264790866
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,10 +544,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1264790866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0633a58cc1928d428a33f73eaaa0864, type: 3}
+  m_Script: {fileID: 11500000, guid: a0a496e33090f234c9529dc8a13993d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
   _growSpeed: 0.5
 --- !u!1 &1647028651
 GameObject:
@@ -667,10 +665,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1647028651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 955a313f9a4dadd46aa50c6869dc006d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a0aac35190eed45bcaa554d94f72df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
   _rotationSpeed: 50
 --- !u!1 &2038235980
 GameObject:
@@ -899,10 +896,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101554781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0633a58cc1928d428a33f73eaaa0864, type: 3}
+  m_Script: {fileID: 11500000, guid: a0a496e33090f234c9529dc8a13993d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
   _growSpeed: 0.5
 --- !u!114 &2101554788
 MonoBehaviour:
@@ -913,11 +909,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101554781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f106e5e1f31e9c247bf4ec7b2cb6a111, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a0aac35190eed45bcaa554d94f72df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
-  _speed: 2
+  _rotationSpeed: 50
 --- !u!114 &2101554789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,11 +922,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101554781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 955a313f9a4dadd46aa50c6869dc006d, type: 3}
+  m_Script: {fileID: 11500000, guid: 822a2fad911690a498cc2483d5e7cdda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
-  _rotationSpeed: 50
+  _speed: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

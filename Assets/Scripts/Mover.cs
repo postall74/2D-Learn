@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class MovementSphere : MonoBehaviour
+public class Mover : MonoBehaviour
 {
-    [SerializeField] private Transform _transform;
     [SerializeField] private float _speed = 0.5f;
+    private Transform _transform;
 
     private void Start()
     {
@@ -18,6 +18,6 @@ public class MovementSphere : MonoBehaviour
 
     private void MoveForward(Transform transform, float speed)
     {
-        transform.transform.Translate(speed * Time.deltaTime * Vector3.forward);
+        transform.transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 }

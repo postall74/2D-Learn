@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class SpinCube : MonoBehaviour
+public class Rotator : MonoBehaviour
 {
-    [SerializeField] private Transform _transform;
+    private Transform _transform;
     [SerializeField] private float _rotationSpeed = 50.0f;
 
     private void Start()
@@ -18,6 +18,6 @@ public class SpinCube : MonoBehaviour
 
     private void RotateAxisY(Transform transform, float rotateSpeed)
     {
-        transform.transform.Rotate(rotateSpeed * Time.deltaTime * Vector3.up);
+        transform.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
     }
 }
