@@ -11,12 +11,19 @@ public class CounterLogic : MonoBehaviour
     private Coroutine _coroutine;
     private WaitForSeconds _wait;
 
-    public event Action<int> OnCounterChanging;
+    public event Action<int> CounterChanged;
+    public event Action<bool> StartChanged;
     public bool IsRunning => _coroutine != null;
 
     private void Awake()
     {
         _wait = new WaitForSeconds(_delay);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            Toggle();
     }
 
     public void Toggle()
@@ -30,6 +37,8 @@ public class CounterLogic : MonoBehaviour
         {
             _coroutine = StartCoroutine(Count());
         }
+
+        StartChanged?.Invoke(IsRunning);
     }
 
     private IEnumerator Count()
@@ -37,7 +46,7 @@ public class CounterLogic : MonoBehaviour
         while (enabled)
         {
             _counter++;
-            OnCounterChanging?.Invoke(_counter);
+            CounterChanged?.Invoke(_counter);
             yield return _wait;
         }
     }

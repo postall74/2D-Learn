@@ -10,24 +10,14 @@ public class CounterUI : MonoBehaviour
 
     private void Awake()
     {
-        _logic.OnCounterChanging += UpdateTextUI;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-            OnToggle();
+        _logic.CounterChanged += UpdateTextUI;
+        _logic.StartChanged += UpdatePanelColors;
     }
 
     private void OnDestroy()
     {
-        _logic.OnCounterChanging -= UpdateTextUI;
-    }
-
-    private void OnToggle()
-    {
-        _logic.Toggle();
-        UpdatePanelColors();
+        _logic.CounterChanged -= UpdateTextUI;
+        _logic.StartChanged -= UpdatePanelColors;
     }
 
     private void UpdateTextUI(int counter)
@@ -35,7 +25,7 @@ public class CounterUI : MonoBehaviour
         _text.text = $"{counter}";
     }
 
-    private void UpdatePanelColors()
+    private void UpdatePanelColors(bool isRunning)
     {
         _playPanel.color = _logic.IsRunning ? Color.green : Color.white;
         _stopPanel.color = _logic.IsRunning ? Color.white : Color.red;
