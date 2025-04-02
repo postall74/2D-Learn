@@ -8,27 +8,27 @@ public class CounterLogic : MonoBehaviour
     [SerializeField] private float _delay = 0.5f;
 
     private int _counter = 0;
-    private Coroutine _counterCoroutine;
+    private Coroutine _coroutine;
     private WaitForSeconds _wait;
 
-    public event Action<int> OnCounterChanged;
-    public bool IsRunning => _counterCoroutine != null;
+    public event Action<int> OnCounterChanging;
+    public bool IsRunning => _coroutine != null;
 
     private void Awake()
     {
         _wait = new WaitForSeconds(_delay);
     }
 
-    public void ToggleCounter()
+    public void Toggle()
     {
-        if(_counterCoroutine != null)
+        if(_coroutine != null)
         {
-            StopCoroutine(_counterCoroutine);
-            _counterCoroutine = null;
+            StopCoroutine(_coroutine);
+            _coroutine = null;
         }
         else
         {
-            _counterCoroutine = StartCoroutine(Count());
+            _coroutine = StartCoroutine(Count());
         }
     }
 
@@ -37,7 +37,7 @@ public class CounterLogic : MonoBehaviour
         while (enabled)
         {
             _counter++;
-            OnCounterChanged?.Invoke(_counter);
+            OnCounterChanging?.Invoke(_counter);
             yield return _wait;
         }
     }

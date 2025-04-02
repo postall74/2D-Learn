@@ -3,36 +3,36 @@ using UnityEngine.UI;
 
 public class CounterUI : MonoBehaviour
 {
-    [SerializeField] private Text _counterText;
+    [SerializeField] private Text _text;
     [SerializeField] private Image _playPanel;
     [SerializeField] private Image _stopPanel;
     [SerializeField] private CounterLogic _logic;
 
-    private void OnEnable()
+    private void Awake()
     {
-        _logic.OnCounterChanged += UpdateCounterTextUI;
+        _logic.OnCounterChanging += UpdateTextUI;
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            OnToggleCounter();
+            OnToggle();
     }
 
     private void OnDestroy()
     {
-        _logic.OnCounterChanged -= UpdateCounterTextUI;
+        _logic.OnCounterChanging -= UpdateTextUI;
     }
 
-    private void OnToggleCounter()
+    private void OnToggle()
     {
-        _logic.ToggleCounter();
+        _logic.Toggle();
         UpdatePanelColors();
     }
 
-    private void UpdateCounterTextUI(int counter)
+    private void UpdateTextUI(int counter)
     {
-        _counterText.text = $"{counter}";
+        _text.text = $"{counter}";
     }
 
     private void UpdatePanelColors()
