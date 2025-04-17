@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4671068088093396481
+--- !u!1 &2296402687566862464
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,52 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7501572791250700640}
-  - component: {fileID: 3459667992173444594}
-  - component: {fileID: 5578187896891905106}
-  - component: {fileID: 6712379873487776085}
-  - component: {fileID: 817373958678941891}
-  - component: {fileID: 7854675547973769764}
+  - component: {fileID: 8474162851364813093}
+  - component: {fileID: 8100773232274048000}
+  - component: {fileID: 7258757784928908316}
+  - component: {fileID: 2079916950670986989}
+  - component: {fileID: 6447330588011422501}
+  - component: {fileID: 5840790911920798985}
+  - component: {fileID: 7861796853702526808}
+  - component: {fileID: 2112449548603194682}
+  - component: {fileID: 3349498883104906796}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Cube
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7501572791250700640
+--- !u!4 &8474162851364813093
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671068088093396481}
+  m_GameObject: {fileID: 2296402687566862464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5385592, y: 0.5, z: 1.3234148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3459667992173444594
+--- !u!33 &8100773232274048000
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671068088093396481}
+  m_GameObject: {fileID: 2296402687566862464}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5578187896891905106
+--- !u!23 &7258757784928908316
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671068088093396481}
+  m_GameObject: {fileID: 2296402687566862464}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -88,13 +91,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6712379873487776085
+--- !u!65 &2079916950670986989
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671068088093396481}
+  m_GameObject: {fileID: 2296402687566862464}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -109,13 +112,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &817373958678941891
+--- !u!54 &6447330588011422501
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671068088093396481}
+  m_GameObject: {fileID: 2296402687566862464}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -136,21 +139,65 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7854675547973769764
+--- !u!114 &5840790911920798985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671068088093396481}
+  m_GameObject: {fileID: 2296402687566862464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe8ec5c03162d3408077aba64df63e5, type: 3}
+  m_Script: {fileID: 11500000, guid: e7be938151c6a294695f6781b732f91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 4671068088093396481}
+  _splitChance: 1
+  _splitDecay: 0.5
+--- !u!114 &7861796853702526808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296402687566862464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f1b283764cf304287dbc8508567bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 2296402687566862464}
+  _minSpawnCount: 2
+  _maxSpawnCount: 6
+  _scaleFactor: 0.5
+--- !u!114 &2112449548603194682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296402687566862464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d09b887d0bd0c4e8b5a0bb6c74d117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionForce: 300
+  _explosionRadius: 3
+--- !u!114 &3349498883104906796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296402687566862464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e17e8cfde5a740ad51aac9c78f5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _materials:
   - {fileID: 2100000, guid: 663834164c6a04740aaa1b778249ce7e, type: 2}
+  - {fileID: 2100000, guid: 5e148de6cdf2d164aa3e3f90ce8c852c, type: 2}
   - {fileID: 2100000, guid: b0b4de3bd6e976e4f8b3adc6e72377ed, type: 2}
   - {fileID: 2100000, guid: a54b7ad866d3a9b47bbf3b53baa0acc4, type: 2}
   - {fileID: 2100000, guid: cba66c276aed0874091de1c33eb3950d, type: 2}
@@ -169,10 +216,3 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
   - {fileID: 2100000, guid: aeee7071bea0a4c478b4fea5933c5f79, type: 2}
   - {fileID: 2100000, guid: c852af001dae0064e9acaa832f1dadb7, type: 2}
-  _explosionForce: 200
-  _explosionRadius: 2
-  _minSpawnCount: 2
-  _maxSpawnCount: 6
-  _splitChance: 1
-  _splitDecay: 0.5
-  _scaleNewCube: 0.5
