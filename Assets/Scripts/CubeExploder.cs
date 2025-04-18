@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(CubeExploder))]
 public class CubeExploder: MonoBehaviour
@@ -8,25 +9,17 @@ public class CubeExploder: MonoBehaviour
 
     private void OnEnable()
     {
-        if (TryGetComponent(out CubeSpawner spawner))
-            spawner.OnCubeSpawned += ExplodeCubes;
+        GetComponent<CubeSpawner>().OnRigidbodiesSpawned += Explode;
     }
 
     private void OnDisable()
     {
-        if (TryGetComponent(out CubeSpawner spawner))
-            spawner.OnCubeSpawned -= ExplodeCubes;
+        GetComponent<CubeSpawner>().OnRigidbodiesSpawned -= Explode;
     }
 
-    private void ExplodeCubes(GameObject[] cubes)
+    private void Explode(List<Rigidbody> rigidbodies)
     {
-        foreach (var cube in cubes)
-        {
-            if (cube.TryGetComponent(out Rigidbody rigidbody) == false)
-                rigidbody = cube.AddComponent<Rigidbody>();
-
-            rigidbody.useGravity = true;
+        foreach (var rigidbody in rigidbodies)
             rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-        }
     }
 }

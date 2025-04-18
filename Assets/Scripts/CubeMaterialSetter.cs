@@ -1,30 +1,25 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(CubeExploder))]
-public class CubeMaterialSetter: MonoBehaviour
+public class CubeMaterialSetter : MonoBehaviour
 {
     [SerializeField] private Material[] _materials;
 
     private void OnEnable()
     {
-        if (TryGetComponent(out CubeSpawner spawner))
-            spawner.OnCubeSpawned += SetRandomMaterial;
+        GetComponent<CubeSpawner>().OnRendererSpawned += SetRandomMaterial;
     }
 
     private void OnDisable()
     {
-        if (TryGetComponent(out CubeSpawner spawner))
-            spawner.OnCubeSpawned -= SetRandomMaterial;
+        GetComponent<CubeSpawner>().OnRendererSpawned -= SetRandomMaterial;
     }
 
-    private void SetRandomMaterial(GameObject[] cubes)
+    private void SetRandomMaterial(List<Renderer> renderers)
     {
-        //if (_materials.Length == 0)
-        //    return;
-
-        foreach (var cube in cubes)
-            if (cube.TryGetComponent(out Renderer renderer))
-                renderer.material = _materials[Random.Range(0, _materials.Length)];
+        foreach (var renderer in renderers)
+            renderer.material = _materials[Random.Range(0, _materials.Length)];
 
     }
 }

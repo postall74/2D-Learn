@@ -1,42 +1,52 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _prefab;
+    [SerializeField] private Cube _cubePrefab;
     [SerializeField] private int _minSpawnCount = 2;
     [SerializeField] private int _maxSpawnCount = 6;
-    [SerializeField, Range(0f, 1f)] private float _scaleFactor;
+    [SerializeField, Range(0f, 1f)] private float _scaleFactor = 0.5f;
 
-    public event System.Action<GameObject[]> OnCubeSpawned;
+    public event System.Action<List<Rigidbody>> OnRigidbodiesSpawned;
+    public event System.Action<List<Renderer>> OnRendererSpawned;
+
+    private readonly Dictionary<Cube, System.Action<float>> _handlers = new();
 
     private void OnEnable()
     {
-        if (TryGetComponent(out Cube cube))
-            cube.OnSplitRequested += HandleSplit;
+        if (_cubePrefab != null)
+            _cubePrefab.SplitRequested += Spawn;
     }
 
     private void OnDisable()
     {
-        if (TryGetComponent(out Cube cube))
-            cube.OnSplitRequested -= HandleSplit;
+        if (_cubePrefab != null)
+            _cubePrefab.SplitRequested -= Spawn;
     }
 
-    private void HandleSplit(float newChance)
+    private void Spawn(float newChance)
     {
         int count = Random.Range(_minSpawnCount, _maxSpawnCount + 1);
-        GameObject[] newCubes = new GameObject[count];
+        List<Rigidbody> rigidbodies = new List<Rigidbody>();
+        List<Renderer> renderers = new List<Renderer>();
 
         for (int i = 0; i < count; i++)
         {
-            GameObject cube = Instantiate(_prefab, transform.position, Random.rotation);
+            Cube cube = Instantiate(_cubePrefab, transform.position, Random.rotation);
             cube.transform.localScale = transform.localScale * _scaleFactor;
-            
-            if (cube.TryGetComponent(out Cube cubeComponent))
-                cubeComponent.Initialize(newChance);
+            cube.Initialize(newChance);
 
-                newCubes[i] = cube;
+            Rigidbody rigidbody = cube.GetComponent<Rigidbody>() ?? cube.AddComponent<Rigidbody>();
+            rigidbody.useGravity = true;
+            rigidbodies.Add(rigidbody);
+
+            if (cube.TryGetComponent(out Renderer renderer))
+                renderers.Add(renderer);
         }
 
-        OnCubeSpawned?.Invoke(newCubes);
+        OnRigidbodiesSpawned?.Invoke(rigidbodies);
+        OnRendererSpawned?.Invoke(renderers);
     }
 }

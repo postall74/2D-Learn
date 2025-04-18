@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4f1b283764cf304287dbc8508567bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2296402687566862464}
+  _cubePrefab: {fileID: 5840790911920798985}
   _minSpawnCount: 2
   _maxSpawnCount: 6
   _scaleFactor: 0.5
