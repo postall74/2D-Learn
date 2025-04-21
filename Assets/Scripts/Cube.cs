@@ -1,25 +1,33 @@
+using System;
 using UnityEngine;
 
-public class Cube : MonoBehaviour, IClickable
+[RequireComponent(typeof(Rigidbody), typeof(Renderer))]
+public class Cube : MonoBehaviour
 {
-    [SerializeField, Range(0f, 1f)] private float _splitChance = 1f;
-    [SerializeField, Range(0f, 1f)] private float _splitDecay = 0.5f;
+    [SerializeField, Range(InputConstants.MinSplitChance, InputConstants.MaxSplitChance)] private float _splitChance = 1f;
 
-    public event System.Action<float> SplitRequested;
+    private Rigidbody _rigidbody;
+    private Renderer _renderer;
+
+    public static event Action<Cube, float> CubeClicked;
+
+    public float SplitChance => _splitChance;
+    public Rigidbody Rigidbody => _rigidbody;
+    public Renderer Renderer => _renderer;
+    
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        _renderer = GetComponent<Renderer>();
+    }
 
     public void Initialize(float splitChance)
     {
         _splitChance = splitChance;
-    }
+    }    
 
-    public void OnClick()
+    public void Click()
     {
-        if (Random.value < _splitChance)
-        {
-            float newChance = _splitChance * _splitDecay;
-            SplitRequested?.Invoke(newChance);
-        }
-
-        Destroy(gameObject);
+        CubeClicked?.Invoke(this, _splitChance);
     }
 }

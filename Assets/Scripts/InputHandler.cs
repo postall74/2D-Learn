@@ -8,11 +8,10 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Vector3 _minBounds = new Vector3(-50, 1, -50);
     [SerializeField] private Vector3 _maxBounds = new Vector3(50, 10, 50);
 
-    Camera _mainCamera;
-
     private void Awake()
     {
-        _mainCamera = Camera.main;
+        if (_camera == null)
+            _camera = FindFirstObjectByType<FreeCamera>();
     }
 
     private void Update()
@@ -23,12 +22,12 @@ public class InputHandler : MonoBehaviour
 
     private void HandleClick()
     {
-        if(Input.GetMouseButtonDown(InputConstants.LeftMouseButton))
+        if (Input.GetMouseButtonDown(InputConstants.LeftMouseButton))
         {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.MainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.TryGetComponent(out IClickable clickable))
-                clickable.OnClick();
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.TryGetComponent(out Cube clickable))
+                clickable.Click();
         }
     }
 
@@ -48,6 +47,6 @@ public class InputHandler : MonoBehaviour
             );
 
         _camera.Move(direction, _moveSpeed);
-        _camera.ClampPoosition(_minBounds, _maxBounds);
+        _camera.ClampPosition(_minBounds, _maxBounds);
     }
 }

@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(CubeExploder))]
 public class CubeExploder: MonoBehaviour
 {
-    [SerializeField] private float _explosionForce = 200f;
-    [SerializeField] private float _explosionRadius = 2f;
-
     private void OnEnable()
     {
-        GetComponent<CubeSpawner>().OnRigidbodiesSpawned += Explode;
+        CubeCreatedEvent.OnCubesCreated += Explode;
     }
 
     private void OnDisable()
     {
-        GetComponent<CubeSpawner>().OnRigidbodiesSpawned -= Explode;
+        CubeCreatedEvent.OnCubesCreated -= Explode;
     }
 
-    private void Explode(List<Rigidbody> rigidbodies)
+    private void Explode(List<Cube> cubes, Vector3 origin)
     {
-        foreach (var rigidbody in rigidbodies)
-            rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+        foreach (Cube cube in cubes)
+            cube.Rigidbody.AddExplosionForce(InputConstants.DefaultExplosionForce, origin, InputConstants.DefaultExplosionRadius);
     }
 }
