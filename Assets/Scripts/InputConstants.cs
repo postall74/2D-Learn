@@ -14,7 +14,6 @@ public static class InputConstants
     public const int LeftMouseButton = 0;
     public const int RightMouseButton = 1;
 
-    public const float DefaultSplitChance = 1f;
     public const float MinSplitChance = 0f;
     public const float MaxSplitChance = 1f;
 

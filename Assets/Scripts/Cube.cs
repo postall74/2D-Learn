@@ -6,28 +6,18 @@ public class Cube : MonoBehaviour
 {
     [SerializeField, Range(InputConstants.MinSplitChance, InputConstants.MaxSplitChance)] private float _splitChance = 1f;
 
-    private Rigidbody _rigidbody;
-    private Renderer _renderer;
-
-    public static event Action<Cube, float> CubeClicked;
-
     public float SplitChance => _splitChance;
-    public Rigidbody Rigidbody => _rigidbody;
-    public Renderer Renderer => _renderer;
-    
+    public Rigidbody Rigidbody { get; private set; }
+    public Renderer Renderer { get; private set; }
+
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _renderer = GetComponent<Renderer>();
+        Rigidbody = GetComponent<Rigidbody>();
+        Renderer = GetComponent<Renderer>();
     }
 
     public void Initialize(float splitChance)
     {
         _splitChance = splitChance;
-    }    
-
-    public void Click()
-    {
-        CubeClicked?.Invoke(this, _splitChance);
     }
 }

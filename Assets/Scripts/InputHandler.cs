@@ -8,10 +8,20 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Vector3 _minBounds = new Vector3(-50, 1, -50);
     [SerializeField] private Vector3 _maxBounds = new Vector3(50, 10, 50);
 
+    private ICubeClickListener _clickListener;
+
+    public void Initialize(ICubeClickListener clickListener)
+    {
+        _clickListener = clickListener;
+    }
+
     private void Awake()
     {
         if (_camera == null)
             _camera = FindFirstObjectByType<FreeCamera>();
+
+        if (_camera == null)
+            throw new MissingReferenceException($"FreeCamera not found!");
     }
 
     private void Update()
@@ -26,8 +36,8 @@ public class InputHandler : MonoBehaviour
         {
             Ray ray = _camera.MainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.TryGetComponent(out Cube clickable))
-                clickable.Click();
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.TryGetComponent(out Cube cube))
+                _clickListener?.OnCubeClicked(cube);
         }
     }
 

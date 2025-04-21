@@ -1,43 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
 
-    private void OnEnable()
+    public List<Cube> Spawn(Cube cube)
     {
-        Cube.CubeClicked += HandlerClicked;
-    }
-
-    private void OnDisable()
-    {
-        Cube.CubeClicked -= HandlerClicked;
-    }
-
-    private void HandlerClicked(Cube cube, float newChance)
-    {
-        if (Random.value > newChance)
-        {
-            Destroy(cube.gameObject);
-            return;
-        }
-
-        List<Cube> cubes = new List<Cube>();
-        Vector3 originPosition = cube.transform.position;
-        Vector3 originScale = cube.transform.localScale;
         int count = Random.Range(InputConstants.MinSpawnCount, InputConstants.MaxSpawnCount + 1);
+        List<Cube> spawnedCubes = new(count);
 
         for (int i = 0; i < count; i++)
         {
-            Cube newCube = Instantiate(_cubePrefab, originPosition, Random.rotation);
-            newCube.transform.localScale = originScale * InputConstants.DefaultSplitDecay;
-            newCube.Initialize(cube.SplitChance * InputConstants.DefaultSplitDecay);
-            newCube.Rigidbody.useGravity = true;
-            cubes.Add(newCube);
+            Cube newCube = InstantiateCube(cube);
+            spawnedCubes.Add(newCube);
         }
 
-        CubeCreatedEvent.Rise(cubes, originPosition);
-        Destroy(cube.gameObject);
+        return spawnedCubes;
     }
-}
+
+    private Cube InstantiateCube(Cube original)
+    {
+        Cube cube = Instantiate(_cubePrefab, original.transform.position, Random.rotation);
+        cube.transform.localScale = original.transform.localScale * InputConstants.DefaultScaleFactor;
+        cube.Initialize(original.SplitChance * InputConstants.DefaultSplitDecay);
+        cube.Rigidbody.useGravity = true;
+        return cube;
+    }
+}                                                                                                                   
