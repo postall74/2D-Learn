@@ -148,6 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d09b887d0bd0c4e8b5a0bb6c74d117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cubeLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &134951346
 Transform:
   m_ObjectHideFlags: 0
@@ -174,6 +177,10 @@ PrefabInstance:
     - target: {fileID: 2296402687566862464, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
       propertyPath: m_Name
       value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2296402687566862464, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7258757784928908316, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -649,6 +656,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2296402687566862464, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7258757784928908316, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -1006,6 +1017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2296402687566862464, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7258757784928908316, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -1240,6 +1255,10 @@ PrefabInstance:
     - target: {fileID: 2296402687566862464, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
       propertyPath: m_Name
       value: Cube (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2296402687566862464, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7258757784928908316, guid: c13540a6b853bdd4eb82cd5bb76086a5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

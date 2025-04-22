@@ -15,9 +15,9 @@ public class GameRouter : MonoBehaviour, ICubeClickListener
 
     public void OnCubeClicked(Cube cube)
     {
-        if (ShouldDestroy(cube))
+        if (Random.value > cube.SplitChance)
         {
-            Destroy(cube.gameObject);
+            _exploder.ExplodeSingle(cube);
             return;
         }
 
@@ -25,10 +25,5 @@ public class GameRouter : MonoBehaviour, ICubeClickListener
         _materialSetter.SetRandomMaterial(spawned);
         _exploder.Explode(spawned, cube.transform.position);
         Destroy(cube.gameObject);
-    }
-
-    private bool ShouldDestroy(Cube cube)
-    {
-       return Random.value > cube.SplitChance;
     }
 }
