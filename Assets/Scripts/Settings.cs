@@ -24,7 +24,8 @@ public class Settings : ScriptableObject
 
     public Material GetDifferntMaterail(Material original)
     {
-        if (_materials.Count < InputConstants.MinMaterialCount) return original;
+        if (_materials.Count < InputConstants.MinMaterialCount) 
+            return original;
 
         Material newMaterial;
 

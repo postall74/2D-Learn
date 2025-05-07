@@ -15,7 +15,7 @@ public class CubeSpawner : MonoBehaviour
         {
             gameObject.AddComponent<CubePool>();
 #if UNITY_EDITOR
-            Debug.LogError($"Don't link to CubePool. Create new component in this object.");
+            Debug.LogError($"Haven't link to CubePool. Create new component in this object.");
 #endif
         }
 
@@ -23,13 +23,17 @@ public class CubeSpawner : MonoBehaviour
         {
             _spawnArea = GetComponent<Transform>();
 #if UNITY_EDITOR
-            Debug.LogError($"Don't link to Spawn Area. Added link to this gameobject.");
+            Debug.LogError($"Haven't link to Spawn Area. Added link to this gameobject.");
 #endif
         }
     }
 
     private void Start()
     {
+        _spawnInterval = new WaitForSeconds(Random.Range(
+                InputConstants.MinSpawnTimeCube,
+                InputConstants.MaxSpawnTimeCube
+            ));
         StartCoroutine(SpawnCoroutine());
     }
 
@@ -38,10 +42,7 @@ public class CubeSpawner : MonoBehaviour
         while(true)
         { 
             Spawn();
-            yield return new WaitForSeconds(Random.Range(
-                InputConstants.MinSpawnTimeCube,
-                InputConstants.MaxSpawnTimeCube
-            ));
+            yield return _spawnInterval;
         }
     }
 
