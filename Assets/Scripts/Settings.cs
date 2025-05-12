@@ -7,8 +7,8 @@ public class Settings : ScriptableObject
     [SerializeField] private List<Material> _materials = new List<Material>();
 
     [Header("Platform Settings")]
-    [Range(InputConstants.MinBounciness, InputConstants.MaxBounciness)]
-    [SerializeField] private float _platformBounciness = InputConstants.DefaultBounciness;
+    [Range(GameConstants.MinBounciness, GameConstants.MaxBounciness)]
+    [SerializeField] private float _platformBounciness = GameConstants.DefaultBounciness;
 
     [Header("Sound Settings")]
     [SerializeField] private List<AudioClip> _impactSounds = new List<AudioClip>();
@@ -19,12 +19,12 @@ public class Settings : ScriptableObject
 
     public Material GetRandomMaterial()
     {
-        return _materials.Count > 0 ? _materials[Random.Range(0, _materials.Count)] : new Material(Shader.Find(InputConstants.StandatrMaterial));
+        return _materials.Count > 0 ? _materials[Random.Range(0, _materials.Count)] : new Material(Shader.Find(GameConstants.StandardShaderName));
     }
 
-    public Material GetDifferntMaterail(Material original)
+    public Material GetDifferentMaterial(Material original)
     {
-        if (_materials.Count < InputConstants.MinMaterialCount) 
+        if (_materials.Count < GameConstants.MinMaterialCount) 
             return original;
 
         Material newMaterial;

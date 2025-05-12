@@ -21,10 +21,10 @@ public class Platform : MonoBehaviour
         if (_settings != null)
             return Mathf.Clamp(
                 _settings.PlatformBounciness,
-                InputConstants.MinBounciness,
-                InputConstants.MaxBounciness
+                GameConstants.MinBounciness,
+                GameConstants.MaxBounciness
             );
 
-        return InputConstants.DefaultBounciness;
+        return GameConstants.DefaultBounciness;
     }
 }

@@ -11,45 +11,89 @@ public class CubeSpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (_pool == null)
-        {
-            gameObject.AddComponent<CubePool>();
-#if UNITY_EDITOR
-            Debug.LogError($"Haven't link to CubePool. Create new component in this object.");
-#endif
-        }
+        ValidateReferences();
+        HandleMissingPool();
+    }
 
+    private void ValidateReferences()
+    {
         if (_spawnArea == null)
         {
             _spawnArea = GetComponent<Transform>();
 #if UNITY_EDITOR
-            Debug.LogError($"Haven't link to Spawn Area. Added link to this gameobject.");
+            Debug.LogError($"SpawnArea not assigned, using self transform");
+#endif
+        }
+    }
+
+    private void HandleMissingPool()
+    {
+        if (_pool == null)
+        {
+            _pool = gameObject.AddComponent<CubePool>() ?? gameObject.GetComponent<CubePool>();
+#if UNITY_EDITOR
+            Debug.LogError($"Haven't link to CubePool. Create new component in this object.");
 #endif
         }
     }
 
     private void Start()
     {
-        _spawnInterval = new WaitForSeconds(Random.Range(
-                InputConstants.MinSpawnTimeCube,
-                InputConstants.MaxSpawnTimeCube
-            ));
+        _spawnInterval = new WaitForSeconds(Random.Range(GameConstants.MinSpawnDelay, GameConstants.MaxSpawnDelay));
+
+        if (CheckDependencies() == false)
+            return;
+
         StartCoroutine(SpawnCoroutine());
+    }
+
+    private bool CheckDependencies()
+    {
+        if (_pool == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogError($"CubePool reference is missing!");
+#endif
+            return false;
+        }
+
+        if (_settings == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogError($"Settings reference is missing!");
+#endif
+            return false;
+        }
+
+        return true;
     }
 
     private IEnumerator SpawnCoroutine()
     {
-        while(true)
-        { 
-            Spawn();
+        while (enabled)
+        {
             yield return _spawnInterval;
+
+            if(enabled == false) 
+                yield break;
+
+            Spawn();
         }
     }
 
     private void Spawn()
     {
-        CubeBehaviour cube = _pool.Pool.Get();
-        cube.Initialize(_pool.Pool, _settings);
+        CubeBehaviour cube = _pool.GetCube();
+
+        if (cube == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogError($"Falid to get cube from pool!");
+#endif
+            return;
+        }
+
+        cube.Initialize(_settings);
         cube.transform.position = CalculateSpawnPosition();
     }
 
@@ -58,9 +102,9 @@ public class CubeSpawner : MonoBehaviour
         var scale = _spawnArea.localScale;
 
         return _spawnArea.position + new Vector3(
-            Random.Range(-scale.x, scale.x) * InputConstants.BasePlaneSize / 2f,
-            InputConstants.SpawnHeightOffset,
-            Random.Range(-scale.z, scale.z) * InputConstants.BasePlaneSize / 2f
+            Random.Range(-scale.x, scale.x) * GameConstants.BasePlaneSize / 2f,
+            GameConstants.SpawnHeightOffset,
+            Random.Range(-scale.z, scale.z) * GameConstants.BasePlaneSize / 2f
         );
     }
 }
