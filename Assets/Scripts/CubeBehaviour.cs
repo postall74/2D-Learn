@@ -38,10 +38,13 @@ public class CubeBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent(out Platform platform) 
+        if (collision.collider.TryGetComponent(out Platform platform)
             && _isTouched == false)
             HandlePlatformCollision();
     }
+
+    private void OnDestroy() =>
+        OnReleaseRequested = null;
 
     private void HandlePlatformCollision()
     {
@@ -51,10 +54,8 @@ public class CubeBehaviour : MonoBehaviour
         StartCoroutine(ReleaseRoutine());
     }
 
-    private void ChangeMaterial()
-    {
+    private void ChangeMaterial() =>
         _meshRenderer.material = _settings.GetDifferentMaterial(_originalMaterial);
-    }
 
     private void PlayImpactSound()
     {

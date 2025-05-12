@@ -67,6 +67,12 @@ public class CubePool : MonoBehaviour
     private void DisableCube(CubeBehaviour cube) =>
         cube.gameObject.SetActive(false);
 
-    private void DestroyCube(CubeBehaviour cube) =>
+    private void DestroyCube(CubeBehaviour cube)
+    {
+        if (cube == null)
+            return;
+
+        cube.OnReleaseRequested -= ReleaseCube;
         Destroy(cube.gameObject);
+    }
 }
