@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 
-public class Animation : MonoBehaviour, IAnimation
+[Serializable]
+public class Animation : IAnimation
 {
     private Animator _animator;
     private int _speedHash = Animator.StringToHash("Speed");

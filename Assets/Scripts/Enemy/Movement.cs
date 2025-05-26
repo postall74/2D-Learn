@@ -1,23 +1,30 @@
+using System;
 using UnityEngine;
 
-public class Movement : MonoBehaviour, IMovement
+[Serializable]
+public class Movement : IMovement
 {
     private Transform _transform;
-    private Rigidbody _rigidbody;
     private float _speed;
+    private Vector3 _direction;
 
-    public void Initialize(float maxSpeed)
+    public void Initialize(Transform transform) =>
+        _transform = transform;
+
+    public void SetSpeed(float speed) => 
+        _speed = speed;
+
+    public void Move(Vector3 direction) =>
+        _direction = direction.normalized;
+
+    public void UpdateMovement()
     {
-        _speed = Random.Range(1f, maxSpeed);
+        if (_transform == null) 
+            return;
+        _transform.rotation = Quaternion.identity;
+        _transform.position += _direction * _speed * Time.deltaTime * Settings.HalfSpeed;
     }
 
-    public void Move(Vector3 direction)
-    {
-        transform.position += direction * Time.deltaTime * _speed;
-    }
-
-    public void Stop()
-    {
-        _rigidbody.velocity = Vector3.zero;
-    }
+    public void Stop() =>
+        _direction = Vector3.zero;
 }

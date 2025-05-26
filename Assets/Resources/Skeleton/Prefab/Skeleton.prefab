@@ -1542,8 +1542,6 @@ GameObject:
   - component: {fileID: 4253594117991050986}
   - component: {fileID: 2295773313117933335}
   - component: {fileID: 6958452326312291365}
-  - component: {fileID: 4692408197766791407}
-  - component: {fileID: 1325070946142399468}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -1650,31 +1648,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb33d0be91f1f2b43af55e208263c4e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxSpeed: 10
---- !u!114 &4692408197766791407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7568303818354125946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790d6dc786723684ca4504b90c24d141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1325070946142399468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7568303818354125946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffa106e5e95773547906818fbce21293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8156806648854495308

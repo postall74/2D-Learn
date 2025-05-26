@@ -5,52 +5,50 @@ using UnityEngine.Pool;
 public class EnemyPool : MonoBehaviour
 {
     [SerializeField] private Enemy _enemyPrefab;
-    [SerializeField] private int _defaultCapacity = 10;
-    [SerializeField] private int _maxSize = 100;
 
     private ObjectPool<Enemy> _pool;
-    private IMovement _movement = new Movement();
-    private IAnimation _animation = new Animation();
 
     public event Action<IEnemy> OnEnemyCreated;
 
     private void Awake()
     {
-        _pool = new ObjectPool<Enemy>
-            (
-                CreateEnemy,
-                OnGet,
-                OnRelease,
-                OnDestroy,
-                true,
-                _defaultCapacity,
-                _maxSize
-            );
+        _pool = new ObjectPool<Enemy>(
+            CreateEnemy,
+            OnGet,
+            OnRelease,
+            OnDestroyEnemy,
+            true,
+            Settings.DefaultPoolCapacity,
+            Settings.MaxPoolSize);
     }
-
-    public Enemy Get() =>
-        _pool.Get();
-
-    public void Release(Enemy enemy) =>
-        _pool.Release(enemy);
 
     private Enemy CreateEnemy()
     {
-        Enemy enemy = Instantiate(_enemyPrefab);
-        enemy.Initialize(_movement, _animation);
+        var enemy = Instantiate(_enemyPrefab);
+        enemy.Initialize(new Movement(), new Animation());
         enemy.OnDeactivated += Release;
         OnEnemyCreated?.Invoke(enemy);
         return enemy;
     }
 
-    private void OnGet(Enemy enemy) =>
+    private void OnGet(Enemy enemy) => 
         enemy.gameObject.SetActive(true);
 
-    private void OnRelease(Enemy enemy) =>
+    private void OnRelease(Enemy enemy) => 
         enemy.gameObject.SetActive(false);
 
-    private void OnDestroy(Enemy enemy)
+    private void OnDestroyEnemy(Enemy enemy)
     {
-        Destroy(enemy.gameObject);
+        if (enemy != null && enemy.gameObject != null)
+            Destroy(enemy.gameObject);
     }
+
+    public Enemy Get() => 
+        _pool.Get();
+
+    public void Release(Enemy enemy) => 
+        _pool.Release(enemy);
+
+    private void OnDestroy() => 
+        _pool?.Dispose();
 }

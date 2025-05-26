@@ -1,16 +1,13 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(Collider))]
+[RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour, IEnemy
 {
-    [SerializeField] private float _maxSpeed;
-
     private IMovement _movement;
     private IAnimation _animation;
     private Animator _animator;
 
-    public event Action<Enemy> OnActivated;
     public event Action<Enemy> OnDeactivated;
 
     private void Awake()
@@ -18,9 +15,14 @@ public class Enemy : MonoBehaviour, IEnemy
         _animator = GetComponent<Animator>();
     }
 
+    private void FixedUpdate()
+    {
+        (_movement as Movement)?.UpdateMovement();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bounce"))
+        if (other.CompareTag(Settings.BounceTag))
             Deactivate();
     }
 
@@ -34,19 +36,21 @@ public class Enemy : MonoBehaviour, IEnemy
         _movement = movement;
         _animation = animation;
 
-        _movement.Initialize(_maxSpeed);
+        _movement.Initialize(transform);
         _animation.Initialize(_animator);
     }
 
     public void Activate(Vector3 position, Vector3 direction)
     {
+        float speed = UnityEngine.Random.Range(Settings.MinSpeed, Settings.MaxSpeed);
+        
+        transform.rotation = Quaternion.LookRotation(direction);
         transform.position = position;
         gameObject.SetActive(true);
 
-        float speed = UnityEngine.Random.Range(1f, _maxSpeed);
+        _movement.SetSpeed(speed);
         _movement.Move(direction);
         _animation.Play(speed);
-        OnActivated?.Invoke(this);
     }
 
     public void Deactivate()

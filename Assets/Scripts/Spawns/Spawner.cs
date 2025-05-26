@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        _delay = new WaitForSeconds(2f);
+        _delay = new WaitForSeconds(Settings.SpawnInterval);
         StartCoroutine(SpanwRoutine());
     }
 
