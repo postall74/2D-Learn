@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Movement : IMovement
+public class Mover : IMover
 {
     private Transform _transform;
     private float _speed;
@@ -14,10 +14,10 @@ public class Movement : IMovement
     public void SetSpeed(float speed) => 
         _speed = speed;
 
-    public void Move(Vector3 direction) =>
+    public void NormalizeDirection(Vector3 direction) =>
         _direction = direction.normalized;
 
-    public void UpdateMovement()
+    public void Move()
     {
         if (_transform == null) 
             return;
