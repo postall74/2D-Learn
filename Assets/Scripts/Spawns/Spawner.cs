@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,22 +6,14 @@ using UnityEngine.Pool;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private List<SpawnPoint> _spawnPoints = new();
-    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private List<EnemyPrefabMapping> _enemyPrefabs = new();
 
     private WaitForSeconds _delay;
-
-    //public event Action<Vector3, Vector3> OnSpawnRequested;
+    private Dictionary<EnemyType, ObjectPool<Enemy>> _pools = new();
 
     private void Awake()
     {
-        _pool = new ObjectPool<Enemy>(
-            CreateEnemy,
-            OnGet,
-            OnRelease,
-            OnDestroyEnemy,
-            true,
-            Settings.DefaultPoolCapacity,
-            Settings.MaxPoolSize);
+        InitializePools();
     }
 
     private void Start()
@@ -30,20 +21,38 @@ public class Spawner : MonoBehaviour
         _delay = new WaitForSeconds(Settings.SpawnInterval);
         StartCoroutine(SpanwRoutine());
     }
-    private ObjectPool<Enemy> _pool;
 
-    private void OnDestroy() =>
-        _pool?.Dispose();
-
-    public Enemy Get() =>
-        _pool.Get();
-
-    public void Release(Enemy enemy) =>
-        _pool.Release(enemy);
-
-    private Enemy CreateEnemy()
+    private void OnDestroy()
     {
-        var enemy = Instantiate(_enemyPrefab);
+        foreach (var pool in _pools.Values)
+            pool?.Dispose();
+    }
+
+    public void Release(Enemy enemy)
+    {
+        if(_pools.TryGetValue(enemy.Type, out var pool))
+            pool.Release(enemy);
+    }
+
+    private void InitializePools()
+    {
+        foreach (var mapping in _enemyPrefabs)
+        {
+            _pools[mapping.Type] = new ObjectPool<Enemy>(
+                () => CreateEnemy(mapping.Prefab),
+                OnGet,
+                OnRelease,
+                OnDestroyEnemy,
+                true,
+                defaultCapacity: Settings.DefaultPoolCapacity,
+                maxSize: Settings.MaxPoolSize
+            );
+        }
+    }
+
+    private Enemy CreateEnemy(Enemy prefab)
+    {
+        Enemy enemy = Instantiate(prefab);
         enemy.OnDeactivated += Release;
         return enemy;
     }
@@ -65,7 +74,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpanwRoutine()
     {
-        while(enabled)
+        while (enabled)
         {
             yield return _delay;
             SpawnAtRandomPoint();
@@ -74,9 +83,13 @@ public class Spawner : MonoBehaviour
 
     private void SpawnAtRandomPoint()
     {
-        var index = UnityEngine.Random.Range(0, _spawnPoints.Count);
-        var point = _spawnPoints[index];
-        Enemy enemy = _pool.Get();
-        enemy.Activate(point.Position, point.Direction);
+        var point = _spawnPoints[UnityEngine.Random.Range(0, _spawnPoints.Count)];
+
+        if(_pools.TryGetValue(point.Type, out var pool))
+        {
+            Enemy enemy = pool.Get();
+            enemy.Initialize(point.Type, point.Target.transform);
+            enemy.Activate(point.Position);
+        }
     }
 }

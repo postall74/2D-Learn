@@ -5,11 +5,15 @@ using UnityEngine;
 public class Mover : IMover
 {
     private Transform _transform;
+    private Transform _target;
     private float _speed;
     private Vector3 _direction;
 
     public void Initialize(Transform transform) =>
         _transform = transform;
+
+    public void SetTarget(Transform target) => 
+        _target = target;
 
     public void SetSpeed(float speed) => 
         _speed = speed;
@@ -19,10 +23,12 @@ public class Mover : IMover
 
     public void Move()
     {
-        if (_transform == null) 
+        if (_transform == null || _target == null) 
             return;
-        _transform.rotation = Quaternion.identity;
-        _transform.position += _direction * _speed * Time.deltaTime * Settings.HalfSpeed;
+
+        _direction = (_target.position - _transform.position).normalized;
+        _transform.position += _direction * (_speed * Time.deltaTime);
+        _transform.rotation = Quaternion.LookRotation(_direction);
     }
 
     public void Stop() =>

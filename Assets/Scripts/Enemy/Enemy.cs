@@ -4,10 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour, IEnemy
 {
+    [SerializeField] private EnemyType _type;
+
     private IMover _mover;
     private IAnimation _animation;
     private Animator _animator;
 
+    public EnemyType Type => _type;
     public event Action<Enemy> OnDeactivated;
 
     private void Awake()
@@ -24,7 +27,7 @@ public class Enemy : MonoBehaviour, IEnemy
         _animation.Initialize(_animator);
     }
 
-    private void FixedUpdate() =>
+    private void Update() =>
         _mover.Move();
 
     private void OnTriggerEnter(Collider other)
@@ -36,16 +39,35 @@ public class Enemy : MonoBehaviour, IEnemy
     private void OnDestroy() =>
         OnDeactivated = null;
 
-    public void Activate(Vector3 position, Vector3 direction)
+    public void Initialize(EnemyType type, Transform target)
     {
-        float speed = UnityEngine.Random.Range(Settings.MinSpeed, Settings.MaxSpeed);
+        _type = type;
+        SetTarget(target);
+    }
 
-        transform.SetPositionAndRotation(position, Quaternion.LookRotation(direction));
+    public void Activate(Vector3 position)
+    {
+        float speed = GetSpeedByType(_type);
+
+        transform.position = position;
         gameObject.SetActive(true);
 
         _mover.SetSpeed(speed);
-        _mover.NormalizeDirection(direction);
-        _animation.Play(speed);
+        _animation.Play(speed); ;
+    }
+
+    public void SetTarget(Transform target) =>
+        _mover.SetTarget(target);
+
+    private float GetSpeedByType(EnemyType type)
+    {
+        return type switch
+        {
+            EnemyType.Basic => UnityEngine.Random.Range(Settings.BasicMinSpeed, Settings.BasicMaxSpeed),
+            EnemyType.Fast => UnityEngine.Random.Range(Settings.FastMinSpeed, Settings.FastMaxSpeed),
+            EnemyType.Slow => UnityEngine.Random.Range(Settings.SlowMinSpeed, Settings.SlowMaxSpeed),
+            _ => Settings.DefaultEnemySpeed
+        };
     }
 
     public void Deactivate()
