@@ -324,11 +324,11 @@ MonoBehaviour:
   - {fileID: 1277461591}
   _enemyPrefabs:
   - Type: 0
-    Prefab: {fileID: 6958452326312291365, guid: 033dee7a9da98654fa9879fde1e4329f, type: 3}
+    Prefab: {fileID: 7283549411580125421, guid: 033dee7a9da98654fa9879fde1e4329f, type: 3}
   - Type: 1
-    Prefab: {fileID: 6958452326312291365, guid: f4c96bd1d2e178d44855bb418c8c7b2b, type: 3}
+    Prefab: {fileID: 8454124117782394014, guid: f4c96bd1d2e178d44855bb418c8c7b2b, type: 3}
   - Type: 2
-    Prefab: {fileID: 6958452326312291365, guid: fa30a2c876b2d0c4981fb941b76be443, type: 3}
+    Prefab: {fileID: 3020208223793948627, guid: fa30a2c876b2d0c4981fb941b76be443, type: 3}
 --- !u!4 &46285112
 Transform:
   m_ObjectHideFlags: 0

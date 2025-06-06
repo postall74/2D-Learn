@@ -2,10 +2,7 @@ using UnityEngine;
 
 public interface IMover
 {
-    public void Initialize(Transform transform);
-    public void SetTarget(Transform target);
-    public void SetSpeed(float maxSpeed);
-    public void NormalizeDirection(Vector3 direction);
-    public void Move();
+    public void Initialize(Transform transform, Transform target, float speed);
+    void UpdateMovement();
     public void Stop();
 }

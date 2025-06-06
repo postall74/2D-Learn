@@ -8,8 +8,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private List<SpawnPoint> _spawnPoints = new();
     [SerializeField] private List<EnemyPrefabMapping> _enemyPrefabs = new();
 
-    private WaitForSeconds _delay;
-    private Dictionary<EnemyType, ObjectPool<Enemy>> _pools = new();
+    private WaitForSeconds _spawnDelay;
+    private Dictionary<EnemyType, ObjectPool<EnemyBase>> _pools = new();
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        _delay = new WaitForSeconds(Settings.SpawnInterval);
+        _spawnDelay = new WaitForSeconds(Settings.SpawnInterval);
         StartCoroutine(SpanwRoutine());
     }
 
@@ -28,7 +28,7 @@ public class Spawner : MonoBehaviour
             pool?.Dispose();
     }
 
-    public void Release(Enemy enemy)
+    public void Release(EnemyBase enemy)
     {
         if(_pools.TryGetValue(enemy.Type, out var pool))
             pool.Release(enemy);
@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
     {
         foreach (var mapping in _enemyPrefabs)
         {
-            _pools[mapping.Type] = new ObjectPool<Enemy>(
+            _pools[mapping.Type] = new ObjectPool<EnemyBase>(
                 () => CreateEnemy(mapping.Prefab),
                 OnGet,
                 OnRelease,
@@ -50,24 +50,24 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private Enemy CreateEnemy(Enemy prefab)
+    private EnemyBase CreateEnemy(EnemyBase prefab)
     {
-        Enemy enemy = Instantiate(prefab);
-        enemy.OnDeactivated += Release;
+        EnemyBase enemy = Instantiate(prefab);
+        enemy.Deactivated += Release;
         return enemy;
     }
 
-    private void OnGet(Enemy enemy) =>
+    private void OnGet(EnemyBase enemy) =>
         enemy.gameObject.SetActive(true);
 
-    private void OnRelease(Enemy enemy) =>
+    private void OnRelease(EnemyBase enemy) =>
         enemy.gameObject.SetActive(false);
 
-    private void OnDestroyEnemy(Enemy enemy)
+    private void OnDestroyEnemy(EnemyBase enemy)
     {
         if (enemy != null)
         {
-            enemy.OnDeactivated -= Release;
+            enemy.Deactivated -= Release;
             Destroy(enemy.gameObject);
         }
     }
@@ -76,7 +76,7 @@ public class Spawner : MonoBehaviour
     {
         while (enabled)
         {
-            yield return _delay;
+            yield return _spawnDelay;
             SpawnAtRandomPoint();
         }
     }
@@ -87,8 +87,8 @@ public class Spawner : MonoBehaviour
 
         if(_pools.TryGetValue(point.Type, out var pool))
         {
-            Enemy enemy = pool.Get();
-            enemy.Initialize(point.Type, point.Target.transform);
+            EnemyBase enemy = pool.Get();
+            enemy.Initialize(point.Target.transform);
             enemy.Activate(point.Position);
         }
     }

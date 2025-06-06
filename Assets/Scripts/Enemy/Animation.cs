@@ -11,10 +11,18 @@ public class Animation : IAnimation
 
     public void Play(float speed)
     {
+        if (_animator == null) 
+            return;
+
         _animator.SetFloat(Settings.SpeedHash, speed);
         _animator.enabled = true;
     }
 
-    public void Stop() =>
+    public void Stop() 
+    {
+        if (_animator == null) 
+            return;
+
         _animator.enabled = false;
+    }
 }

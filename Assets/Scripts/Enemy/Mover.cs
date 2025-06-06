@@ -7,30 +7,23 @@ public class Mover : IMover
     private Transform _transform;
     private Transform _target;
     private float _speed;
-    private Vector3 _direction;
 
-    public void Initialize(Transform transform) =>
-        _transform = transform;
-
-    public void SetTarget(Transform target) => 
-        _target = target;
-
-    public void SetSpeed(float speed) => 
-        _speed = speed;
-
-    public void NormalizeDirection(Vector3 direction) =>
-        _direction = direction.normalized;
-
-    public void Move()
+    public void Initialize(Transform transform, Transform target, float speed)
     {
-        if (_transform == null || _target == null) 
-            return;
-
-        _direction = (_target.position - _transform.position).normalized;
-        _transform.position += _direction * (_speed * Time.deltaTime);
-        _transform.rotation = Quaternion.LookRotation(_direction);
+        _transform = transform;
+        _target = target;
+        _speed = speed;
     }
 
-    public void Stop() =>
-        _direction = Vector3.zero;
+    public void UpdateMovement()
+    {
+        if (_transform == null || _target == null)
+            return;
+
+        Vector3 direction = (_target.position - _transform.position).normalized;
+        _transform.position += direction * (_speed * Time.deltaTime);
+        _transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    public void Stop() { }
 }
